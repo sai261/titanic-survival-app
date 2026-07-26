@@ -48,15 +48,19 @@ except FileNotFoundError:
     pass 
 
 if model is not None:
+    if hasattr(model, 'feature_names_in_'):
+        df = df[model.feature_names_in_]
+
     if st.button("Predict Survival"):
         prediction = model.predict(df)
-        probability = model.predict_proba(df)
+        probability = model.predict_proba(df)[0][1] # Get survival probability
         
         st.subheader('Prediction Results')
-        st.write(f"Survival Probability: **{probability[0][1]:.2%}**")
+        st.write(f"Survival Probability: **{probability:.2%}**")
         
         if prediction[0] == 1:
             st.success("🎉 Passenger is predicted to Survive!")
         else:
             st.error("💀 Passenger is predicted Not to Survive.")
 
+  
