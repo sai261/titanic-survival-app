@@ -24,14 +24,16 @@ def user_input_features():
     embarked_mapping = {'C': 0, 'Q': 1, 'S': 2}
     embarked_encoded = embarked_mapping[Embarked]
     
-    data = {
-        'Sex': int(SEX),  # Convert string '1' or '0' to actual integer 1 or 0
+        data = {
         'Pclass': PC,
+        'Sex': int(SEX), 
         'Age': Age,
-        'Fare': Fare,
-        'Embarked': embarked_encoded, 
         'SibSp': Family,
-        'Parch': Parents 
+        'Parch': Parents,
+        'Fare': Fare,
+        'Embarked': embarked_encoded
+    }
+
     }
     features = pd.DataFrame(data, index=[0])
     return features 
