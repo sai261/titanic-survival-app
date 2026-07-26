@@ -9,7 +9,7 @@ try:
     with open('logistic_model.pkl', 'rb') as file:
         model = pickle.load(file)
 except FileNotFoundError:
-    st.error("⚠️ 'logistic_model.pkl' not found! Make sure you exported it from your notebook and uploaded it to GitHub.")
+    st.error("⚠️ 'logistic_model.pkl' not found! Please check your file path on GitHub.")
     model = None
 
 def user_input_features():
@@ -24,16 +24,15 @@ def user_input_features():
     embarked_mapping = {'C': 0, 'Q': 1, 'S': 2}
     embarked_encoded = embarked_mapping[Embarked]
     
-     data = {
-      'Pclass': PC,
-      'Sex': int(SEX), 
-      'Age': Age,
-      'SibSp': Family,
-      'Parch': Parents,
-      'Fare': Fare,
-      'Embarked': embarked_encoded
+    data = {
+        'Pclass': PC,
+        'Sex': int(SEX), 
+        'Age': Age,
+        'SibSp': Family,
+        'Parch': Parents,
+        'Fare': Fare,
+        'Embarked': embarked_encoded
     }
-
     features = pd.DataFrame(data, index=[0])
     return features 
 
@@ -50,14 +49,14 @@ except FileNotFoundError:
 
 if model is not None:
     if st.button("Predict Survival"):
-       
         prediction = model.predict(df)
-        probability = model.predict_proba(df)[0][1]
+        probability = model.predict_proba(df)
         
         st.subheader('Prediction Results')
-        st.write(f"Survival Probability: **{probability:.2%}**")
+        st.write(f"Survival Probability: **{probability[0][1]:.2%}**")
         
         if prediction[0] == 1:
             st.success("🎉 Passenger is predicted to Survive!")
         else:
             st.error("💀 Passenger is predicted Not to Survive.")
+
