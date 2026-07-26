@@ -34,7 +34,6 @@ def user_input_features():
         'Embarked': embarked_encoded
     }
 
-    }
     features = pd.DataFrame(data, index=[0])
     return features 
 
