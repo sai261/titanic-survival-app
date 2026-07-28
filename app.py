@@ -49,14 +49,16 @@ except FileNotFoundError:
 
 if model is not None:
     if st.button("Predict Survival"):
-       
-        prediction = model.predict(df)
-        probability = model.predict_proba(df)[0][1]
+        raw_features = df.values
         
+        prediction = model.predict(raw_features)
+        probability = model.predict_proba(raw_features)
+
         st.subheader('Prediction Results')
-        st.write(f"Survival Probability: **{probability:.2%}**")
-        
+        survival_prob = probability[0][1]
+        st.write(f"Survival Probability: **{survival_prob:.2%}**")
+
         if prediction[0] == 1:
-            st.success("🎉 Passenger is predicted to Survive!")
+            st.success("The model predicts this passenger would **Survive**!")
         else:
-            st.error("💀 Passenger is predicted Not to Survive.")
+            st.error("The model predicts this passenger would **Not Survive**.")
